@@ -1,10 +1,14 @@
-from rest_framework import generics
+from rest_framework import generics, viewsets
 
-from movies.models import Movie
-from movies.serializers import MovieSerializer
+from movies.models import Movie, Category
+from movies.serializers import MovieSerializer, CategorySerializer
 
 
-# Create your views here.
-class MovieAPIView(generics.ListAPIView):
+class MovieViewSet(viewsets.ModelViewSet):
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
+
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer

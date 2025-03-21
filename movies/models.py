@@ -6,7 +6,7 @@ from .utils import generate_slug
 
 # Create your models here.
 class Movie(models.Model):
-    title = models.CharField(max_length=100, verbose_name='Название')
+    title = models.CharField(max_length=100, unique=True, verbose_name='Название')
     slug = fields.AutoSlugField(populate_from=['title'], slugify_function=generate_slug, unique=True,
                                 verbose_name='Slug')
     description = models.TextField(blank=True, verbose_name='Описание')
@@ -14,7 +14,7 @@ class Movie(models.Model):
     imdb_rating = models.FloatField(blank=True, null=True, verbose_name='IMDb')
     time_create = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
     time_update = models.DateTimeField(auto_now=True, verbose_name='Время изменения')
-    is_published = models.BooleanField(default=True, verbose_name='Статус')
+    is_published = models.BooleanField(default=False, verbose_name='Статус')
     cat = models.ForeignKey('Category', on_delete=models.PROTECT, null=True)
 
     def __str__(self):
