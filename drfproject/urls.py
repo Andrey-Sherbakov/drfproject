@@ -18,13 +18,15 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import SimpleRouter, DefaultRouter
 
-from movies.views import MovieViewSet, CategoryViewSet
+from movies.views import CategoryViewSet, MovieList, MovieUpdate, MovieDestroy
 
-movies_router = DefaultRouter()
-movies_router.register(r'movies', MovieViewSet)
-movies_router.register(r'categories', CategoryViewSet)
+# movies_router = DefaultRouter()
+# movies_router.register(r'movies', MovieViewSet)
+# movies_router.register(r'categories', CategoryViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/', include(movies_router.urls)),
+    path('api/v1/movies/', MovieList.as_view()),
+    path('api/v1/movies/<int:pk>/', MovieUpdate.as_view()),
+    path('api/v1/movies_delete/<int:pk>/', MovieDestroy.as_view()),
 ]

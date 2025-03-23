@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django_extensions.db import fields
 
@@ -15,7 +16,8 @@ class Movie(models.Model):
     time_create = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
     time_update = models.DateTimeField(auto_now=True, verbose_name='Время изменения')
     is_published = models.BooleanField(default=False, verbose_name='Статус')
-    cat = models.ForeignKey('Category', on_delete=models.PROTECT, null=True)
+    cat = models.ForeignKey('Category', on_delete=models.PROTECT, null=True, related_name='movies')
+    user = models.ForeignKey(User, verbose_name='Пользователь', null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.title
