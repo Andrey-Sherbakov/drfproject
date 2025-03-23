@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import SimpleRouter, DefaultRouter
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
 
 from movies.views import CategoryViewSet, MovieList, MovieUpdate, MovieDestroy
 
@@ -26,7 +27,11 @@ from movies.views import CategoryViewSet, MovieList, MovieUpdate, MovieDestroy
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/v1/drf-auth/', include('rest_framework.urls')),
     path('api/v1/movies/', MovieList.as_view()),
     path('api/v1/movies/<int:pk>/', MovieUpdate.as_view()),
     path('api/v1/movies_delete/<int:pk>/', MovieDestroy.as_view()),
+    path('api/v1/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/v1/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/v1/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
 ]
