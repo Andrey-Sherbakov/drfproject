@@ -1,0 +1,49 @@
+services:
+  drfproject:
+    build: .
+    image: drfproject
+    container_name: drfproject
+    restart: always
+    command: "python manage.py runserver 0.0.0.0:8000"
+    env_file:
+      - .env
+    environment:
+      - DB_HOST=postgres
+    networks:
+      - dbnet
+    volumes:
+      - ./:/drfproject
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:17-alpine
+    container_name: postgres
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_DB=${DB_NAME}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - dbnet
+
+  adminer:
+    image: adminer
+    container_name: adminer
+    ports:
+      - "8080:8080"
+    networks:
+      - dbnet
+    depends_on:
+      - postgres
+
+
+networks:
+  dbnet:
+    driver: bridge
+
+volumes:
+  postgres-data:

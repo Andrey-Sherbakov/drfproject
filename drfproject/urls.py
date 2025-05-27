@@ -21,9 +21,9 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from movies.views import CategoryViewSet, MovieList, MovieUpdate, MovieDestroy
 
-# movies_router = DefaultRouter()
+movies_router = DefaultRouter()
 # movies_router.register(r'movies', MovieViewSet)
-# movies_router.register(r'categories', CategoryViewSet)
+movies_router.register(r'api/v1/categories', CategoryViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -35,3 +35,5 @@ urlpatterns = [
     path('api/v1/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/v1/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
 ]
+
+urlpatterns += movies_router.urls

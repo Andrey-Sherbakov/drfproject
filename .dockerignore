@@ -1,0 +1,13 @@
+.venv
+.linux_venv
+.idea
+.env
+.log
+*.sql
+dump.rdb
+**/fixtures/
+__pycache__/
+/staticfiles/
+/media/
+
+
